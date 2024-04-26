@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Select Whith Tags and Search - Example</title>
+    <style>
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Required resources: -->
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+
+    <!-- To be multi-select just put multiple, otherwise it will only select one value. -->
+
+    <div class="box">
+        <label>Item</label>
+        <select id="item_id" name="item_id" data-value="[3423, 785]" multiple>
+            <option value=""></option>
+            <option value="4356">Coca-Cola</option>
+            <option value="785">Pepsi</option>
+            <option value="3423">Dolly</option>
+            <option value="56456">Antártica</option>
+            <option value="634">Conquista</option>
+        </select>
+    </div>
+    <script type="text/javascript">
+        let itemSelectedValues = document.getElementById('item_id').dataset.value;
+
+        // Creates a new element
+        const itemSelect = new MultiSelect('#item_id');
+
+        let itemSelectedValuesArr = [];
+        if (itemSelectedValues !== '') {
+            itemSelectedValuesArr = JSON.parse(`${itemSelectedValues}`);
+        }
+        let itemArrayValues = [];
+        itemSelectedValuesArr.forEach(function(item) {
+            itemArrayValues.push(parseInt(item));
+        });
+
+        // Starts an event with the selected values
+        itemSelect.setEvent(itemArrayValues);
+        
+        // Triggers the chosen function after selecting a value
+        itemSelect.trigger(doAction);
+
+        function doAction(value)
+        {
+            console.log(`Take action with the values: ${value}`);
+        }
+
+    </script>
+</body>
+</html>
